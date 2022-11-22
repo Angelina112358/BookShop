@@ -34,9 +34,6 @@ namespace BookShop.Infrastructure.Services
             var product = await _context.Products
                 .FirstOrDefaultAsync(product => product.Id == id);
 
-            if (product == null)
-                throw new NullReferenceException();
-
             _context.Remove(product);
             await _context.SaveChangesAsync();
         }
@@ -46,9 +43,6 @@ namespace BookShop.Infrastructure.Services
             var product = await GetQueryable()
                .FirstOrDefaultAsync(product => product.Id == id);
 
-            if (product == null)
-                throw new NullReferenceException();
-
             return product;
         }
 
@@ -57,13 +51,10 @@ namespace BookShop.Infrastructure.Services
             var product = await GetQueryable()
                .FirstOrDefaultAsync(product => product.Name == name);
 
-            if (product == null)
-                throw new NullReferenceException();
-
             return product;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetProductsAsync() =>
+        public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync() =>
             await GetQueryable().ToListAsync();
 
         public async Task UpdateProductAsync(Guid id, UpdateProductRequest request)
@@ -71,9 +62,6 @@ namespace BookShop.Infrastructure.Services
             var product = await _context
                 .Products
                 .FirstOrDefaultAsync(product => product.Id == id);
-
-            if (product == null)
-                throw new NullReferenceException();
 
             _mapper.Map(request, product);
             _context.Update(product);

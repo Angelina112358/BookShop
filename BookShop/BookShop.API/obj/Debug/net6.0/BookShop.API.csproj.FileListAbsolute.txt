@@ -67,3 +67,4 @@ C:\Users\PC\Desktop\github\BookShop\BookShop\BookShop.API\obj\Debug\net6.0\refin
 C:\Users\PC\Desktop\github\BookShop\BookShop\BookShop.API\obj\Debug\net6.0\BookShop.API.pdb
 C:\Users\PC\Desktop\github\BookShop\BookShop\BookShop.API\obj\Debug\net6.0\BookShop.API.genruntimeconfig.cache
 C:\Users\PC\Desktop\github\BookShop\BookShop\BookShop.API\obj\Debug\net6.0\ref\BookShop.API.dll
+C:\Users\PC\Desktop\github\BookShop\BookShop\BookShop.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

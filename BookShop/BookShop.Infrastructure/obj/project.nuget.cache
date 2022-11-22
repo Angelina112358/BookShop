@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "hTwtOajRoWsr65PAYx8O3PLqh2K+UeDOG7sv5/YsNfF5IZG283raolCXdu4v0hG0w14VCUqs5qYGV6IWKQFx0A==",
+  "dgSpecHash": "ZcT7DoxP2d8b/avP6gHy4Ju6B5tdmpO0ioCcvZ5CTGUoke+IUgMejPnBwmWih0mPNWYGLwyU1/Ii8sTtccs+0g==",
   "success": true,
   "projectFilePath": "C:\\Users\\PC\\Desktop\\github\\BookShop\\BookShop\\BookShop.Infrastructure\\BookShop.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.11\\microsoft.entityframeworkcore.6.0.11.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.11\\microsoft.entityframeworkcore.abstractions.6.0.11.nupkg.sha512",

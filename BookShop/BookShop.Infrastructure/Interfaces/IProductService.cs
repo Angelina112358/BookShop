@@ -5,7 +5,7 @@ namespace BookShop.Infrastructure.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductViewModel>> GetProductsAsync();
+        Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();
         Task<ProductViewModel> GetProductByIdAsync(Guid id);
         Task<ProductViewModel> GetProductByNameAsync(string name);
         Task CreateProductAsync(CreateProductRequest product);

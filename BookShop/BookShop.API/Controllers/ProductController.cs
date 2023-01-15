@@ -17,20 +17,38 @@ namespace BookShop.API.Controllers
             _productService = productService;
         }
 
+        [HttpPost("CreateProduct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> CreateProductAsync(CreateProductRequest product)
+        {
+            await _productService.CreateProductAsync(product);
+            return NoContent();
+        }
+
+        [HttpPost("UpdateProduct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateProductAsync(int id, UpdateProductRequest request)
+        {
+            await _productService.UpdateProductAsync(id, request);
+            return NoContent();
+        }
+
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ProductViewModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllProductsAsync() 
+        public async Task<IActionResult> GetAllProductsAsync()
         {
             var products = await _productService.GetAllProductsAsync();
             return Ok(products);
         }
-        [HttpGet("name={name}", Name = "GetProductByName")]
+
+        [HttpGet("name/{name}", Name = "GetProductByName")]
         [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductByName(string name)
         {
             var product = await _productService.GetProductByNameAsync(name);
             return Ok(product);
         }
+
         [HttpGet("{id}", Name = "GetProductById")]
         [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductById(int id)
@@ -39,11 +57,18 @@ namespace BookShop.API.Controllers
             return Ok(product);
         }
 
-        [HttpPost("CreateProduct")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> CreateProductAsync(CreateProductRequest product)
+        [HttpGet("category/{id}")]
+        public async Task<IActionResult> GetProductsByCategory(int categoryId)
         {
-            await _productService.CreateProductAsync(product);
+            var products = await _productService.GetProductsByCategoryAsync(categoryId);
+            return Ok(products);
+        }
+
+        [HttpDelete("DeleteProduct")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            await _productService.DeleteProductAsync(id);
             return NoContent();
         }
     }

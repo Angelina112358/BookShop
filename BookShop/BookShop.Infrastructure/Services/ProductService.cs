@@ -57,6 +57,16 @@ namespace BookShop.Infrastructure.Services
 
             return product;
         }
+        /// <summary>
+        /// Исправить поиск продуктов по категории
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ProductViewModel>> GetProductsByCategoryAsync(int categoryId)
+        {
+            var products = await GetQueryable().Where(product => product.Id == categoryId).ToListAsync();
+            return products;
+        }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync() =>
             await GetQueryable().ToListAsync();

@@ -11,5 +11,6 @@ namespace BookShop.Infrastructure.Interfaces
         Task CreateProductAsync(CreateProductRequest product);
         Task UpdateProductAsync(int id, UpdateProductRequest product);
         Task DeleteProductAsync(int id);
+        Task<IEnumerable<ProductViewModel>> GetProductsByCategoryAsync(int categoryId);
     }
 }

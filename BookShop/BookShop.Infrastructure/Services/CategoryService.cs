@@ -23,6 +23,7 @@ namespace BookShop.Infrastructure.Services
             _context
                 .Categories
                 .ProjectTo<CategoryViewModel>(_mapper.ConfigurationProvider);
+
         public async Task CreateCategoryAsync(CreateCategoryRequest request)
         {
             var category = _mapper.Map<CreateCategoryRequest, Category>(request);
@@ -46,7 +47,8 @@ namespace BookShop.Infrastructure.Services
 
         public async Task<CategoryViewModel> GetCategoryByIdAsync(int id) =>
             await GetQueryable().FirstOrDefaultAsync(category => category.Id == id);
-
+        public async Task<CategoryViewModel> GetCategoryByNameAsync(string name) =>
+            await GetQueryable().FirstOrDefaultAsync(category => category.Name == name);
         public async Task UpdateCategoryAsync(int id, UpdateCategoryRequest request)
         {
             var categoryToUpdate = await _context

@@ -1,10 +1,7 @@
 ﻿namespace BookShop.Infrastructure.Requests.Product
 {
-    public class CreateProductRequest
+    public class CreateProductRequest: ProductRequest
     {
-        public string Author { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -13,18 +13,22 @@ namespace BookShop.Infrastructure.Services
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        
         public ProductService(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+        
         private IQueryable<ProductViewModel> GetQueryable() =>
             _context
                 .Products
                 .ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider);
+        
         public async Task CreateProductAsync(CreateProductRequest request)
         {
             var product = _mapper.Map<CreateProductRequest, Product>(request);
+            await UpdateCategories(request, product);
             _context.Add(product);
             await _context.SaveChangesAsync();
         }
@@ -61,11 +65,25 @@ namespace BookShop.Infrastructure.Services
         {
             var product = await _context
                 .Products
+                .Include(product => product.Categories)
                 .FirstOrDefaultAsync(product => product.Id == id);
 
             _mapper.Map(request, product);
             _context.Update(product);
+            await UpdateCategories(request, product);
             await _context.SaveChangesAsync();
+        }
+        
+        private async Task UpdateCategories(ProductRequest request, Product product)
+        {
+            var categoryIds = request.CategoryIds.ToHashSet();
+            var categories = await _context
+                .Categories
+                .Where(category => categoryIds.Contains(category.Id))
+                .ToListAsync();
+
+            product.Categories.Clear();
+            product.Categories.AddRange(categories);
         }
     }
 }

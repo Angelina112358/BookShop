@@ -24,13 +24,13 @@ namespace BookShop.API.Controllers
             var products = await _productService.GetAllProductsAsync();
             return Ok(products);
         }
-        //[HttpGet("{name}", Name = "GetProductByName")]
-        //[ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetProductByName(string name) 
-        //{
-        //    var product = await _productService.GetProductByNameAsync(name);
-        //    return Ok(product);
-        //}
+        [HttpGet("name={name}", Name = "GetProductByName")]
+        [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProductByName(string name)
+        {
+            var product = await _productService.GetProductByNameAsync(name);
+            return Ok(product);
+        }
         [HttpGet("{id}", Name = "GetProductById")]
         [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductById(int id)

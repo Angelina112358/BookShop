@@ -7,7 +7,7 @@ using BookShop.Infrastructure.Requests.Product;
 namespace BookShop.API.Controllers
 {
     [ApiController]
-    [Route("")]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -17,27 +17,28 @@ namespace BookShop.API.Controllers
             _productService = productService;
         }
 
-        [HttpGet("products")]
+        [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ProductViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllProductsAsync() 
         {
             var products = await _productService.GetAllProductsAsync();
             return Ok(products);
         }
-        [HttpGet("{name}", Name = "GetProductByName")]
-        [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetProductByName(string name) 
-        {
-            var product = await _productService.GetProductByNameAsync(name);
-            return Ok(product);
-        }
-        //[HttpGet("{id}", Name = "GetProductById")]
+        //[HttpGet("{name}", Name = "GetProductByName")]
         //[ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetProductById(Guid id)
+        //public async Task<IActionResult> GetProductByName(string name) 
         //{
-        //    var product = await _productService.GetProductByIdAsync(id);
+        //    var product = await _productService.GetProductByNameAsync(name);
         //    return Ok(product);
         //}
+        [HttpGet("{id}", Name = "GetProductById")]
+        [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            return Ok(product);
+        }
+
         [HttpPost("CreateProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> CreateProductAsync(CreateProductRequest product)

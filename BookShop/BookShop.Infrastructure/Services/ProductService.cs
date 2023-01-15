@@ -29,7 +29,7 @@ namespace BookShop.Infrastructure.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteProductAsync(Guid id)
+        public async Task DeleteProductAsync(int id)
         {
             var product = await _context.Products
                 .FirstOrDefaultAsync(product => product.Id == id);
@@ -38,7 +38,7 @@ namespace BookShop.Infrastructure.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ProductViewModel> GetProductByIdAsync(Guid id)
+        public async Task<ProductViewModel> GetProductByIdAsync(int id)
         {
             var product = await GetQueryable()
                .FirstOrDefaultAsync(product => product.Id == id);
@@ -57,7 +57,7 @@ namespace BookShop.Infrastructure.Services
         public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync() =>
             await GetQueryable().ToListAsync();
 
-        public async Task UpdateProductAsync(Guid id, UpdateProductRequest request)
+        public async Task UpdateProductAsync(int id, UpdateProductRequest request)
         {
             var product = await _context
                 .Products

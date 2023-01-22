@@ -13,7 +13,7 @@ namespace BookShop.Infrastructure.Mapping
             CreateMap<UpdateProductRequest, Product>();
 
             CreateMap<Product, ProductViewModel>();
-            CreateMap<Category, ProductViewModel.CategoryDto>();
+            CreateMap<Category, CategoryViewModel>();
         }
     }
 }

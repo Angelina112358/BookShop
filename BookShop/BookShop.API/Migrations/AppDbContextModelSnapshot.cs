@@ -34,12 +34,7 @@ namespace BookShop.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Categories");
                 });
@@ -192,29 +187,24 @@ namespace BookShop.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("CategoryProduct", b =>
                 {
-                    b.Property<int>("RolesId")
+                    b.Property<int>("CategoriesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int>("ProductsId")
                         .HasColumnType("int");
 
-                    b.HasKey("RolesId", "UsersId");
+                    b.HasKey("CategoriesId", "ProductsId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("ProductsId");
 
-                    b.ToTable("RoleUser");
-                });
-
-            modelBuilder.Entity("BookShop.Domain.Models.Category", b =>
-                {
-                    b.HasOne("BookShop.Domain.Models.Product", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("ProductId");
+                    b.ToTable("CategoryProduct");
                 });
 
             modelBuilder.Entity("BookShop.Domain.Models.Order", b =>
@@ -247,17 +237,28 @@ namespace BookShop.API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("BookShop.Domain.Models.User", b =>
                 {
-                    b.HasOne("BookShop.Domain.Models.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("BookShop.Domain.Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BookShop.Domain.Models.User", null)
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("CategoryProduct", b =>
+                {
+                    b.HasOne("BookShop.Domain.Models.Category", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookShop.Domain.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -267,9 +268,9 @@ namespace BookShop.API.Migrations
                     b.Navigation("ProductOrders");
                 });
 
-            modelBuilder.Entity("BookShop.Domain.Models.Product", b =>
+            modelBuilder.Entity("BookShop.Domain.Models.Role", b =>
                 {
-                    b.Navigation("Categories");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("BookShop.Domain.Models.User", b =>

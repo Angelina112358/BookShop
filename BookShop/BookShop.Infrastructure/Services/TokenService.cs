@@ -8,32 +8,44 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using BookShop.Infrastructure.Requests.User;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace BookShop.Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly IOptions<TokenIssuerOptions> _optionsHandler;
-        private readonly IUserClaimsFactory _factory;
-
-        public TokenService(IOptions<TokenIssuerOptions> optionsHandler, IUserClaimsFactory factory)
+        private readonly UserManager<User> _userManager;
+        private readonly SymmetricSecurityKey _key;
+        public TokenService(IConfiguration configuration, UserManager<User> userManager)
         {
-            _optionsHandler = optionsHandler;
-            _factory = factory;
+            _userManager = userManager;
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));
         }
-
-        public async Task<AuthenticationResponse> CreateAuthenticationResponseAsync(User user)
+        public async Task<string> CreateToken(User user)
         {
-            var options = _optionsHandler.Value;
-            var tokenDescriptor = new JwtSecurityToken(
-                issuer: "http://localhost:5000",
-                audience: "http://localhost:5000",
-                notBefore: DateTime.UtcNow,
-                claims: new ClaimsIdentity(await _factory.GetClaimsAsync(user), JwtBearerDefaults.AuthenticationScheme).Claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromDays(7)),
-                signingCredentials: new(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(options.Secret)), SecurityAlgorithms.HmacSha256));
-            var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
-            return new() { AccessToken = accessToken, UserId = user.Id };
+            var claims = new List<Claim>()
+            {
+                new(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new(JwtRegisteredClaimNames.UniqueName, user.Username)
+            };
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+            var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = creds
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

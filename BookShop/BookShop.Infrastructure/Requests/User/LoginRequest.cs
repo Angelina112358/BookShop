@@ -2,7 +2,7 @@
 
 namespace BookShop.Infrastructure.Requests.User
 {
-    public class RegisterRequest
+    public class LoginRequest
     {
         [Required]
         public string Username { get; set; }
@@ -10,9 +10,5 @@ namespace BookShop.Infrastructure.Requests.User
         [Required]
         [MinLength(8)]
         public string Password { get; set; }
-
-        [Required]
-        public DateTime BirthDate { get; set; }
-
     }
 }

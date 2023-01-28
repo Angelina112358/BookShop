@@ -2,6 +2,8 @@ using BookShop.Database;
 using Microsoft.EntityFrameworkCore;
 using BookShop.Infrastructure.Services;
 using BookShop.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using BookShop.Domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+
+builder.Services.AddScoped<IAccountService, AccountService>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

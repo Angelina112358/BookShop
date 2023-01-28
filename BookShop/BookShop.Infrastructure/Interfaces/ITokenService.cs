@@ -5,6 +5,6 @@ namespace BookShop.Infrastructure.Interfaces
 {
     public interface ITokenService
     {
-        public Task<AuthenticationResponse> CreateAuthenticationResponseAsync(User user);
+        public Task<string> CreateToken(User user);
     }
 }

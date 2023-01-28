@@ -18,7 +18,21 @@ namespace BookShop.Infrastructure.Services
             _userCommon = userCommon;
             _tokenService = tokenService;
         }
-        public async Task<AuthenticationResponse> RegisterAsync(RegisterRequest request, int roleId)
+
+        public async Task<AuthenticationResponse> LoginAsync(RegisterOrLoginRequest request)
+        {
+            var user = await _userCommon.GetUserByNameAsync(request.Username);
+            if (user is null)
+                return new() { IsSuccess = false };
+
+            var password = request.Password;
+            if (password != user.PasswordHash)
+                return new() { IsSuccess = false };
+            
+            return await _tokenService.CreateAuthenticationResponseAsync(user);
+        }
+
+        public async Task<AuthenticationResponse> RegisterAsync(RegisterOrLoginRequest request, int roleId)
         {
             var user = await _userCommon.GetUserByNameAsync(request.Username);
             if (user is null)
@@ -37,5 +51,7 @@ namespace BookShop.Infrastructure.Services
             user = await _userCommon.GetUserByNameAsync(request.Username);
             return await _tokenService.CreateAuthenticationResponseAsync(user);
         }
+
+        
     }
 }

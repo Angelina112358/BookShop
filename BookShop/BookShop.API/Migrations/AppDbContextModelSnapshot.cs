@@ -140,7 +140,7 @@ namespace BookShop.API.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrder");
+                    b.ToTable("ProductOrders");
                 });
 
             modelBuilder.Entity("BookShop.Domain.Models.Role", b =>

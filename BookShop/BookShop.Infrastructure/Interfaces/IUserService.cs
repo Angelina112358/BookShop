@@ -5,8 +5,8 @@ namespace BookShop.Infrastructure.Interfaces
 {
     public interface IUserService
     {
-        Task<AuthenticationResponse> RegisterAsync(RegisterRequest model, int roleId);
-        //Task<AuthenticationResponse> LoginAsync(LoginRequest model);
+        Task<AuthenticationResponse> RegisterAsync(RegisterOrLoginRequest request, int roleId);
+        Task<AuthenticationResponse> LoginAsync(RegisterOrLoginRequest request);
         //Task<User> GetMeAsync(ClaimsPrincipal claimsPrincipal);
     }
 }

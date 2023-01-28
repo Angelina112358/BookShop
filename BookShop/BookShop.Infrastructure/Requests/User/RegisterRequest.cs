@@ -2,7 +2,7 @@
 
 namespace BookShop.Infrastructure.Requests.User
 {
-    public class RegisterRequest
+    public class RegisterOrLoginRequest
     {
         [Required]
         public string Username { get; set; }

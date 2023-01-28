@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShop.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230122210745_initial_6")]
-    partial class initial_6
+    [Migration("20230126170933_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,7 +142,7 @@ namespace BookShop.API.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrder");
+                    b.ToTable("ProductOrders");
                 });
 
             modelBuilder.Entity("BookShop.Domain.Models.Role", b =>

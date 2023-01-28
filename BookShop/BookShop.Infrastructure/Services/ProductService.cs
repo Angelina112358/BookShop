@@ -31,6 +31,9 @@ namespace BookShop.Infrastructure.Services
             await UpdateCategories(request, product);
             _context.Add(product);
             await _context.SaveChangesAsync();
+            var a = _context.Products.Select(x=>x).ToList();
+            foreach (var item in a)
+                Console.WriteLine(item.Name);
         }
 
         public async Task DeleteProductAsync(int id)

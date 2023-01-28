@@ -7,7 +7,7 @@
         public DateTime BirthDate { get; set; }
         public string PasswordHash { get; set; }
         public DateTime? LockoutDate { get; set; }
-        public Role RoleId { get; set; }
+        public int RoleId { get; set; }
         public Role Role { get; set; }
         public IEnumerable<Order> Orders { get; set; }
     }

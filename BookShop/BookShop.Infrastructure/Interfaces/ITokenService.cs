@@ -1,4 +1,5 @@
-﻿using BookShop.Infrastructure.Responses;
+﻿using BookShop.Domain.Models;
+using BookShop.Infrastructure.Responses;
 
 namespace BookShop.Infrastructure.Interfaces
 {

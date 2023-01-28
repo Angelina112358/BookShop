@@ -10,6 +10,5 @@
         public List<CategoryViewModel> Categories { get; set; } = new();
         public string? PhotoUrl { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
-        
     }
 }
